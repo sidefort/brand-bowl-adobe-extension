@@ -1,11 +1,11 @@
 import { CEP_Config } from "vite-cep-plugin";
 import { version } from "./package.json";
-import { debugAll } from "./cep.config.debug"; // BOLT-CEP-DEBUG-ONLY
+
 
 const config: CEP_Config = {
   version,
-  id: "com.bolt.cep",
-  displayName: "Bolt CEP",
+  id: "co.brandbowl.brandbowl",
+  displayName: "Brand Bowl",
   symlink: "local",
   port: 3000,
   servePort: 5000,
@@ -37,21 +37,21 @@ const config: CEP_Config = {
     {
       mainPath: "./main/index.html",
       name: "main",
-      panelDisplayName: "Bolt CEP",
+      panelDisplayName: "Adobe Extension",
       autoVisible: true,
       width: 600,
       height: 650,
     },
-    ...debugAll, // BOLT-CEP-DEBUG-ONLY
+
   ],
   build: {
     jsxBin: "off",
     sourceMap: true,
   },
   zxp: {
-    country: "US",
+    country: "EE",
     province: "CA",
-    org: "MyCompany",
+    org: "Sidefort OÜ",
     password: "mypassword",
     tsa: [
       "http://timestamp.digicert.com/", // Windows Only

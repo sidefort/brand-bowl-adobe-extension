@@ -3,21 +3,24 @@ import { os, path } from "../lib/cep/node";
 import {
   csi,
   evalES,
+  evalFile,
   openLinkInBrowser,
   subscribeBackgroundColor,
   evalTS,
 } from "../lib/utils/bolt";
-
 import reactLogo from "../assets/react.svg";
 import viteLogo from "../assets/vite.svg";
 import tsLogo from "../assets/typescript.svg";
 import sassLogo from "../assets/sass.svg";
-
 import nodeJs from "../assets/node-js.svg";
 import adobe from "../assets/adobe.svg";
 import bolt from "../assets/bolt-cep.svg";
-
+import { initBolt, enableSpectrum } from "../lib/utils/bolt";
 import "./main.scss";
+
+enableSpectrum();
+initBolt();
+
 
 const Main = () => {
   const [bgColor, setBgColor] = useState("#282c34");
