@@ -8,7 +8,7 @@ import {
   subscribeBackgroundColor,
   evalTS,
 } from "../lib/utils/bolt";
-import "./main.scss";
+import styles from "./main.module.scss";
 import ProjectDashboard from "./components/dashboard/ProjectDashboard";
 
 const Main = () => {
@@ -59,55 +59,10 @@ const Main = () => {
   }, []);
 
   return (
-    <div className="app" style={{ backgroundColor: bgColor }}>
-      <ProjectDashboard />
-      {/* <header className="app-header">
-        <img src={bolt} className="icon" />
-        <div className="stack-icons">
-          Test
-        </div>
-        <div className="button-group">
-          <button onClick={() => setCount((count) => count + 1)}>
-            Count is: {count}
-          </button>
-          <button onClick={nodeTest}>
-            <img className="icon-button" src={nodeJs} />
-          </button>
-          <button onClick={jsxTest}>
-            <img className="icon-button" src={adobe} />
-          </button>
-          <button onClick={jsxTestTS}>Ts</button>
-        </div>
-        <p>
-          Edit <code>main.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <button
-            className="app-link"
-            onClick={() =>
-              openLinkInBrowser("https://github.com/hyperbrew/bolt-cep")
-            }
-          >
-            Bolt Docs
-          </button>
-          {" | "}
-          <button
-            className="app-link"
-            onClick={() => openLinkInBrowser("https://reactjs.org")}
-          >
-            React Docs
-          </button>
-          {" | "}
-          <button
-            className="app-link"
-            onClick={() =>
-              openLinkInBrowser("https://vitejs.dev/guide/features.html")
-            }
-          >
-            Vite Docs
-          </button>
-        </p>
-      </header> */}
+    <div className={styles.app} style={{ backgroundColor: bgColor }}>
+      <div className={styles.container}>
+        <ProjectDashboard />
+      </div>
     </div>
   );
 };

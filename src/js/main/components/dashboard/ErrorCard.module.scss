@@ -1,33 +1,39 @@
 @use "../../../variables.scss";
 
-.projectCardContainer {
+.container {
     display: flex;
     flex-direction: column;
-    width: 45%;
-    padding: 12px;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: variables.$error;
+    font-size: 0.85rem;
 
-    .downloadButton {
+    .messageContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .retryButton {
         display: flex;
         gap: 4px;
         align-items: center;
-        justify-content: center;
         border-radius: 0;
-        // background-color: variables.$dark;
-        background-color: transparent;
+        background-color: variables.$darker;
         color: variables.$font;
         padding: 8px 16px;
         transition: all 0.1s ease-in-out;
-        font-size: 0.65rem;
-        text-align: center;
-        font-weight: 600;
 
         &:hover {
             background-color: variables.$dark;
         }
 
         svg {
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             margin-right: 4px;
         }
     }

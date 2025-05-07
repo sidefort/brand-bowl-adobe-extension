@@ -44,5 +44,5 @@ export function exportFile(): string | null {
   } else if (app.name == "Adobe InDesign") {
   }
 
-  return null; // fallback
+  return null;
 }

@@ -4,12 +4,17 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    height: 100dvh;
+    height: 100vh;
     padding: 16px;
+
+    .header {
+        display: flex;
+        flex-direction: column;
+    }
 
     .uploadContainer{
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         padding: 12px 6px;
 
@@ -22,6 +27,8 @@
             color: variables.$font;
             padding: 8px 16px;
             transition: all 0.1s ease-in-out;
+            font-weight: 600;
+            font-size: 0.8rem;
 
             &:hover {
                 background-color: variables.$dark;
@@ -44,12 +51,12 @@
     }
 
     .logosHeading {
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-weight: 600;
-        color: variables.$highlight;
+        color: variables.$font;
         margin-bottom: 8px;
         text-align: left;
-
+        border-bottom: 1px solid variables.$dark;
     }
 
     .logosContainer {
@@ -57,5 +64,14 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 8px;
+        justify-content: space-between;
+        padding-bottom: 24px;
+    }
+
+    .noLogos {
+        display: flex;
+        color: variables.$highlight;
+        font-size: 0.85rem;
     }
 }
+

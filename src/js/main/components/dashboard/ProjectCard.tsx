@@ -14,6 +14,7 @@ import { addLogosToAPI } from "../../../services/logos";
 import { CloudUploadIcon, DownloadIcon, Loader2Icon } from "lucide-react";
 import { useLogos } from "../../../hooks/react-query/use-logos";
 import { Logo } from "../../../types/logos";
+import { RemoteImage } from "../shared/RemoteImage";
 
 export default function ProjectCard({ uuid, file, label }: Logo) {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
@@ -56,8 +57,10 @@ export default function ProjectCard({ uuid, file, label }: Logo) {
 
   return (
     <div className={styles.projectCardContainer}>
-        <img src={file.fileURL} alt={label} className={styles.logoImage} />
-        <button className={styles.downloadButton} onClick={downloadLogo}><DownloadIcon /> Import asset</button>
+        {/* <img src={file.fileURL} alt={label} className={styles.logoImage} /> */}
+        <RemoteImage src={file.fileURL} alt={label} className={styles.logoImage} />
+
+        <button className={styles.downloadButton} onClick={downloadLogo}><DownloadIcon /> Import</button>
     </div>         
   );
 };

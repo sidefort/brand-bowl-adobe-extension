@@ -15,12 +15,14 @@ import { CloudUploadIcon, Loader2Icon } from "lucide-react";
 import { useLogos } from "../../../hooks/react-query/use-logos";
 import ProjectCard from "./ProjectCard";
 import BrandBowlLogo from "../../../assets/brand-bowl-logo";
+import Loading from "./Loading";
+import ErrorCard from "./ErrorCard";
 
 export default function ProjectDashboard() {
 //   const [documentSelection, setDocumentSelection] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  const { data, refetch } = useLogos("680a09489f9819cf3a2f889d");
+  const { data, refetch, isLoading, isError } = useLogos("680a09489f9819cf3a2f889d");
 
   //* Demonstration of Traditional string eval-based ExtendScript Interaction
   const jsxTest = () => {
@@ -76,8 +78,11 @@ export default function ProjectDashboard() {
             }
 
             const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
+
+            const svgFile = new File([svgBlob], "logo.svg", { type: 'image/svg+xml' });
+            
             await addLogosToAPI({
-                files: [svgBlob],
+                files: [svgFile],
                 projectID: "680a09489f9819cf3a2f889d",
                 });
 
@@ -92,10 +97,33 @@ export default function ProjectDashboard() {
     }
   }
 
+  function renderContent() {
+    if (isLoading) return <Loading />;
+
+    if (isError) return <ErrorCard message="There was an error loading the projects." onRetry={refetch} />;
+
+    if (data?.data?.logos && data.data.logos.length === 0) {
+        return <div className={styles.noLogos}>No logos found.</div>;
+    }
+
+    if (data?.data?.logos && data.data.logos.length > 0) {
+        return (
+            <div className={styles.logosContainer}>
+                {data?.data?.logos && data.data.logos.length > 0 && data.data.logos.map((logo) => (
+                    <ProjectCard key={logo.uuid} {...logo} />
+                ))}
+            </div>
+        );
+    }
+
+    return null;
+    
+  }
+
   return (
     <div className={styles.container}>
-        <div>
-            <BrandBowlLogo />
+        <div className={styles.header}>
+            <BrandBowlLogo width={150} />
 
             {/* <span id="greeting">Hello, user!</span> */}
         </div>
@@ -113,11 +141,12 @@ export default function ProjectDashboard() {
 	    </div>
 
         <h2 className={styles.logosHeading}>Assets</h2>
-        <div className={styles.logosContainer}>
+        {renderContent()}
+        {/* <div className={styles.logosContainer}>
             {data?.data?.logos && data.data.logos.length > 0 && data.data.logos.map((logo) => (
                 <ProjectCard key={logo.uuid} {...logo} />
             ))}
-        </div>
+        </div> */}
   </div>
   );
 };

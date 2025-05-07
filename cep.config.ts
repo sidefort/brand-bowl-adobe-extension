@@ -25,17 +25,17 @@ const config: CEP_Config = {
   iconDarkNormalRollOver: "./src/assets/light-icon.png",
   iconNormalRollOver: "./src/assets/dark-icon.png",
   parameters: ["--v=0", "--enable-nodejs", "--mixed-context"],
-  width: 500,
-  height: 550,
+  width: 200,
+  height: 450,
 
   panels: [
     {
       mainPath: "./main/index.html",
       name: "main",
       panelDisplayName: "Brand Bowl",
-      autoVisible: true,
-      width: 400,
-      height: 400,
+      autoVisible: false,
+      width: 200,
+      height: 450,
     },
 
   ],

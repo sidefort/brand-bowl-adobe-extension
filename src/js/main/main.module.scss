@@ -1,0 +1,10 @@
+@use "../variables.scss";
+
+.app {
+    overflow-y: hidden;
+
+    .container {
+        overflow-y: scroll;
+        
+    }
+}
