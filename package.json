@@ -12,6 +12,9 @@
     "delsymlink": "cross-env ACTION=delsymlink vite"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.75.5",
+    "axios": "^1.9.0",
+    "lucide-react": "^0.507.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

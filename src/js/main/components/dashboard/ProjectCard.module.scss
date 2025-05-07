@@ -1,0 +1,33 @@
+@use "../../../variables.scss";
+
+.projectCardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    padding: 12px;
+
+    .downloadButton {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        // background-color: variables.$dark;
+        background-color: transparent;
+        color: variables.$font;
+        padding: 8px 16px;
+        transition: all 0.1s ease-in-out;
+        font-size: 0.8rem;
+        text-align: center;
+
+        &:hover {
+            background-color: variables.$dark;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+        }
+    }
+}

@@ -253,6 +253,57 @@ export const subscribeBackgroundColor = (callback: (color: string) => void) => {
   );
 };
 
+export const subscribeActiveDocument = async (callback: (selectionLength: number) => void) => {
+  const fetchSelectionCount = async (): Promise<void> => {
+    const result = await evalES(
+      'app.documents.length && app.activeDocument.selection.length || 0',
+    );
+
+    const count = parseInt(result, 10) || 0;
+    callback(count);
+  };
+  
+  // callback(fetchSelectionCount);
+
+  // listen for changes
+
+  const setUpHostListener = `
+    (function() {
+      if (!app.documents.length) return;
+      var doc = app.activeDocument;
+      // create a persistent CSXSEvent
+      var evt = new CSXSEvent();
+      evt.type = "selectionChanged";
+      // handler: set evt.data and dispatch
+      function notify() {
+        evt.data = doc.selection.length.toString();
+        evt.dispatch();
+      }
+      // if not already hooked, add the listener
+      try {
+        // use a flag so we don't bind twice
+        if (!doc._hasCEPSelectionListener) {
+          doc.addEventListener("afterSelectionChanged", notify);
+          doc._hasCEPSelectionListener = true;
+        }
+      } catch(e) {
+        // in case no activeDocument or unsupported host
+      }
+    })();
+  `;
+
+  csi.addEventListener(
+    setUpHostListener,
+    (evt: any) => {
+      const count = parseInt(evt.data, 10) || 0;
+      callback(count);
+    },
+    {}
+  );
+
+  fetchSelectionCount();
+};
+
 // vulcan
 
 declare type IVulcanMessageObject = {

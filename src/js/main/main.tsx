@@ -8,19 +8,8 @@ import {
   subscribeBackgroundColor,
   evalTS,
 } from "../lib/utils/bolt";
-import reactLogo from "../assets/react.svg";
-import viteLogo from "../assets/vite.svg";
-import tsLogo from "../assets/typescript.svg";
-import sassLogo from "../assets/sass.svg";
-import nodeJs from "../assets/node-js.svg";
-import adobe from "../assets/adobe.svg";
-import bolt from "../assets/bolt-cep.svg";
-import { initBolt, enableSpectrum } from "../lib/utils/bolt";
 import "./main.scss";
-
-enableSpectrum();
-initBolt();
-
+import ProjectDashboard from "./components/dashboard/ProjectDashboard";
 
 const Main = () => {
   const [bgColor, setBgColor] = useState("#282c34");
@@ -71,28 +60,11 @@ const Main = () => {
 
   return (
     <div className="app" style={{ backgroundColor: bgColor }}>
-      <header className="app-header">
+      <ProjectDashboard />
+      {/* <header className="app-header">
         <img src={bolt} className="icon" />
         <div className="stack-icons">
-          <div>
-            <img src={viteLogo} />
-            Vite
-          </div>
-          +
-          <div>
-            <img src={reactLogo} />
-            React
-          </div>
-          +
-          <div>
-            <img src={tsLogo} />
-            TypeScript
-          </div>
-          +
-          <div>
-            <img src={sassLogo} />
-            Sass
-          </div>
+          Test
         </div>
         <div className="button-group">
           <button onClick={() => setCount((count) => count + 1)}>
@@ -135,7 +107,7 @@ const Main = () => {
             Vite Docs
           </button>
         </p>
-      </header>
+      </header> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@use "./variables.scss";
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -90,13 +90,13 @@ button:active {
   -webkit-appearance: always;
 }
 ::-webkit-scrollbar-track {
-  background: $darkest;
+  background: variables.$darkest;
   padding: 2.25em 1.6875em;
 }
 ::-webkit-scrollbar-thumb {
-  background: $darker;
+  background: variables.$darker;
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: $dark;
+  background: variables.$dark;
 }

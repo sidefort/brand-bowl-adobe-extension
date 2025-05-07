@@ -1,0 +1,61 @@
+@use "../../../variables.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100dvh;
+    padding: 16px;
+
+    .uploadContainer{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 12px 6px;
+
+        .uploadButton {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            border-radius: 0;
+            background-color: variables.$darker;
+            color: variables.$font;
+            padding: 8px 16px;
+            transition: all 0.1s ease-in-out;
+
+            &:hover {
+                background-color: variables.$dark;
+            }
+
+            svg {
+                width: 16px;
+                height: 16px;
+                margin-right: 4px;
+            }
+        }
+    
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    }
+
+    .logosHeading {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: variables.$highlight;
+        margin-bottom: 8px;
+        text-align: left;
+
+    }
+
+    .logosContainer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
