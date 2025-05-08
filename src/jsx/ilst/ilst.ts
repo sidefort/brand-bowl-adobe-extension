@@ -46,3 +46,62 @@ export function exportFile(): string | null {
 
   return null;
 }
+
+export function placeSVGInArtboard(svgText: string): string {
+  const tempFolder = Folder.temp.fsName;
+  const svgFile = new File(tempFolder + '/downloaded.svg');
+  svgFile.encoding = 'UTF-8';
+  svgFile.open('w');
+  svgFile.write(svgText);
+  svgFile.close();
+
+  if (app.documents.length === 0) {
+    throw new Error('No open document to place into.');
+  }
+
+  const doc = app.activeDocument;
+
+  // @ts-expect-error
+  const svgGroup = doc.groupItems.createFromFile(svgFile);
+  
+  // position at top-left of artboard (AI’s origin is lower-left)
+  svgGroup.position = [0, doc.height];
+  return 'SVG placed successfully.';
+};
+
+export function placeImageInArtboard(fileName: string, fileData: string) {
+  if (!fileName || !fileData) {
+    throw new Error('File name and data are required.');
+  }
+
+  // write temp file
+  const tmpPath = Folder.temp.fsName + '/' + fileName;
+  const f = new File(tmpPath);
+  f.encoding = 'BINARY';
+  if (!f.open('w')) {
+    throw new Error('Cannot open ' + f.fsName);
+  }
+  f.write(fileData);
+  f.close();
+
+  if (app.documents.length === 0) {
+    throw new Error('No open document.');
+  }
+  const doc = app.activeDocument;
+
+
+  // const imageGroup = doc.groupItems.createFromFile(f);
+
+  const placedItem = doc.placedItems.add();
+    placedItem.file = f;
+    // embed it so it isn’t just a link
+    try {
+      placedItem.embed();
+    } catch (_) {
+      // some formats/versions may not support embed(); ignore
+    }
+
+  // move to top‐left of artboard
+  placedItem.position = [0, doc.height];
+  return 'Image placed successfully.';
+}

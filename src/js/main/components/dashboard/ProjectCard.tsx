@@ -15,52 +15,61 @@ import { CloudUploadIcon, DownloadIcon, Loader2Icon } from "lucide-react";
 import { useLogos } from "../../../hooks/react-query/use-logos";
 import { Logo } from "../../../types/logos";
 import { RemoteImage } from "../shared/RemoteImage";
+import axios from "axios";
 
 export default function ProjectCard({ uuid, file, label }: Logo) {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
-  const downloadLogo = async () => {
+  async function downloadLogo() {
     setIsDownloading(true);
     try {
-        // Make a fetch request to get the logo as an array buffer using axios
-        const response = await fetch(file.fileURL);
-        const blob = await response.blob();
-        const svgBlob = new Blob([blob], { type: 'image/svg+xml' });
-        const svgFile = new File([svgBlob], "brandbowl-logo.svg", { type: 'image/svg+xml' });
+      const url = file.fileURL;
+      const ext = url.split('.').pop()!.toLowerCase();
+      let data: string;
+      const isSVG = ext === 'svg' || ext === 'svgz';
+  
+      if (isSVG) {
+        const response = await axios.get(url, { responseType: 'text' });
+        const svgText = response.data;
 
+        evalTS("placeSVGInArtboard", svgText).then(async (svg) => {
+                          console.log("The SVG was placed in the artboard");
+                        });
+      } else {
+        // raster image as binary
+        const resp = await axios.get(url, { responseType: 'arraybuffer' });
+        const bytes = new Uint8Array(resp.data);
+        // build raw‐binary JS string
+        data = Array.prototype.map.call(bytes, (b: number) =>
+          String.fromCharCode(b)
+        ).join('');
 
-
-    } catch (error) {
-
+        const fileName = `downloaded.${ext}`;
+      // Pass the literal strings (JSON-escaped) plus the flag
+      await evalTS(
+        'placeImageInArtboard',
+        fileName,
+        data,
+      );
+      console.log('Image placed:', fileName);
+      }
+  
+      
+  
+    } catch (err) {
+      console.error(err);
     } finally {
-        setIsDownloading(false);
+      setIsDownloading(false);
     }
-
-    // try {
-    //     evalTS("exportFile").then(async (svg) => {
-    //         if (!svg) {
-    //             console.error("No SVG data returned");
-    //             return;
-    //         }
-
-    //         const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
-    //         await addLogosToAPI({
-    //             files: [svgBlob],
-    //             projectID: "680a09489f9819cf3a2f889d",
-    //             });
-    //       });
-        
-    // } catch (error) {
-    //     console.error("Error uploading SVG:", error);
-    // }
   }
 
   return (
     <div className={styles.projectCardContainer}>
-        {/* <img src={file.fileURL} alt={label} className={styles.logoImage} /> */}
         <RemoteImage src={file.fileURL} alt={label} className={styles.logoImage} />
 
-        <button className={styles.downloadButton} onClick={downloadLogo}><DownloadIcon /> Import</button>
+        <button className={styles.downloadButton} onClick={downloadLogo}>
+          {isDownloading ? <><Loader2Icon className={styles.spinning} />Importing...</> : <><DownloadIcon /> Import</>}
+          </button>
     </div>         
   );
 };

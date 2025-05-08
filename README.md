@@ -85,7 +85,7 @@ defaults write com.adobe.CSXS.[VERSION] PlayerDebugMode 1
 
 Update your CEP build and package settings in `cep.config.ts` safely typed
 
-Start building your app in `src/js/main/index(.tsx or .vue or .svelte)`
+Start building your app in `src/js/main/index.tsx`
 
 Write ExtendScript code in `src/jsx/main.ts`
 
