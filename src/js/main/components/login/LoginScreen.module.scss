@@ -1,0 +1,69 @@
+@use "../../../variables.scss";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100vh;
+    padding: 16px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginButton {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    background-color: variables.$darker;
+    color: variables.$font;
+    padding: 8px 16px;
+    transition: all 0.1s ease-in-out;
+    font-weight: 600;
+    font-size: 0.65rem;
+    
+
+    &:hover {
+        background-color: variables.$dark;
+    }
+
+    svg {
+        width: 12px;
+        height: 12px;
+        margin-right: 4px;
+    }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: variables.$font;
+    font-size: 0.85rem;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    color: variables.$font;
+    font-size: 0.85rem;
+}

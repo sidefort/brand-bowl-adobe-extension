@@ -1,8 +1,10 @@
 import axios from "axios";
+import { getToken } from "../utils/token/get-token";
 
-const API_URL = "https://brand-bowl-app-git-jimmy-add-adobe-extension-sidefort.vercel.app/api";
+export const API_URL = "https://brand-bowl-app-git-jimmy-add-adobe-extension-sidefort.vercel.app/api";
+export const SITE_URL = "https://brand-bowl-app-git-jimmy-add-adobe-extension-sidefort.vercel.app";
 
-const token = localStorage.getItem('apiToken');
+const token = getToken();
 
 const brandBowlAPI = axios.create({
     withCredentials: true,
