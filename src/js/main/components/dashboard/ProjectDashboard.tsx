@@ -11,22 +11,27 @@ import {
 } from "../../../lib/utils/bolt";
 import styles from "./ProjectDashboard.module.scss";
 import { addLogosToAPI } from "../../../services/logos";
-import { CloudUploadIcon, Loader2Icon } from "lucide-react";
+import { CloudUploadIcon, Loader2Icon, LogOutIcon } from "lucide-react";
 import { useLogos } from "../../../hooks/react-query/use-logos";
 import ProjectCard from "./ProjectCard";
 import BrandBowlLogo from "../../../assets/brand-bowl-logo";
 import Loading from "./Loading";
 import ErrorCard from "./ErrorCard";
 
-export default function ProjectDashboard() {
+interface ProjectDashboardProps {
+  onLogout: () => void;
+}
+
+export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
 //   const [documentSelection, setDocumentSelection] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const { data, refetch, isLoading, isError } = useLogos("680a09489f9819cf3a2f889d");
 
   //* Demonstration of Traditional string eval-based ExtendScript Interaction
-  const jsxTest = () => {
-    console.log(evalES(`helloWorld("${csi.getApplicationID()}")`));
+  const jsxTest = async () => {
+    // console.log(evalES(`helloWorld("${csi.getApplicationID()}")`));
+    await evalTS("alertDialog", "Hello, user!")
   };
 
   //* Demonstration of End-to-End Type-safe ExtendScript Interaction
@@ -86,14 +91,16 @@ export default function ProjectDashboard() {
                 projectID: "680a09489f9819cf3a2f889d",
                 });
 
+            await evalTS("alertDialog", "The asset was uploaded successfully!")
+
             refetch();
           });
         
     } catch (error) {
         console.error("Error uploading SVG:", error);
+        await evalTS("alertDialog", "There was an error uploading the asset. Please try again.");
     } finally {
-    setIsUploading(false);
-
+      setIsUploading(false);
     }
   }
 
@@ -126,6 +133,9 @@ export default function ProjectDashboard() {
             <BrandBowlLogo width={150} />
 
             {/* <span id="greeting">Hello, user!</span> */}
+            <button className={styles.logoutButton} onClick={jsxTest} title="Logout">
+                <LogOutIcon /> Logout
+            </button>
         </div>
         <label >Select Project:</label>
         <select id="projects" />
