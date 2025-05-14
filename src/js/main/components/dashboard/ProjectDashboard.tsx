@@ -30,7 +30,7 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
     setIsUploading(true);
     try {
         evalTS("exportFile").then(async (svg) => {
-            if (!svg) {
+            if (!svg || !selectedProject) {
                 console.error("No SVG data returned");
                 return;
             }
@@ -41,7 +41,7 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
             
             await addLogosToAPI({
                 files: [svgFile],
-                projectID: "680a09489f9819cf3a2f889d",
+                projectID: selectedProject,
                 });
 
             await evalTS("alertDialog", "The asset was uploaded successfully!")
@@ -79,8 +79,6 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
     return null;
   }
 
-  console.log("Projects: ", projects);
-
   return (
     <div className={styles.container}>
         <div className={styles.header}>
@@ -105,7 +103,7 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
                 
                 )}
             </select>
-            <button id="btnAdd" className={styles.addProjectButton}><PlusIcon /></button>
+            {/* <button id="btnAdd" className={styles.addProjectButton}><PlusIcon /></button> */}
           </div>
         </div>
 

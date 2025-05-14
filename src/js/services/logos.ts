@@ -9,7 +9,7 @@ interface AddLogosToAPIParams {
 
 export const addLogosToAPI = async ({
     files,
-    projectID = "680a09489f9819cf3a2f889d",
+    projectID,
 }: AddLogosToAPIParams): Promise<DataOrError<any>> => {
     try {
         const formData = new FormData();
@@ -39,7 +39,7 @@ interface GetLogosToAPIParams {
 }
 
 export const getLogosFromAPI = async ({
-    projectID = "680a09489f9819cf3a2f889d",
+    projectID,
 }: GetLogosToAPIParams): Promise<DataOrError<{ logos: Logo[] }>> => {
     try {
 
