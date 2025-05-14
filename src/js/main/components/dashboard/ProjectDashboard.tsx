@@ -1,14 +1,5 @@
-import { useEffect, useState } from "react";
-import { os, path } from "../../../lib/cep/node";
-import {
-  csi,
-  evalES,
-  evalFile,
-  openLinkInBrowser,
-  subscribeBackgroundColor,
-  evalTS,
-  subscribeActiveDocument,
-} from "../../../lib/utils/bolt";
+import { useState } from "react";
+import { evalTS } from "../../../lib/utils/bolt";
 import styles from "./ProjectDashboard.module.scss";
 import { addLogosToAPI } from "../../../services/logos";
 import { CloudUploadIcon, Loader2Icon, LogOutIcon, PlusIcon } from "lucide-react";
@@ -18,62 +9,22 @@ import BrandBowlLogo from "../../../assets/brand-bowl-logo";
 import Loading from "./Loading";
 import ErrorCard from "./ErrorCard";
 import { useProjects } from "../../../hooks/react-query/use-projects";
+import { deleteToken } from "../../../utils/token/delete-token";
 
 interface ProjectDashboardProps {
   onLogout: () => void;
 }
 
 export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
-//   const [documentSelection, setDocumentSelection] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<string | undefined>("");
   const { data, refetch, isLoading, isError } = useLogos(selectedProject);
-  const { data: projects, isLoading: isLoadingProjects } = useProjects();
+  const { data: projects, isLoading: isLoadingProjects, isError: isErrorProjects } = useProjects();
 
-  //* Demonstration of Traditional string eval-based ExtendScript Interaction
-  const jsxTest = async () => {
-    // console.log(evalES(`helloWorld("${csi.getApplicationID()}")`));
-    await evalTS("alertDialog", "Hello, user!")
+  const handleLogout = async () => {
+    deleteToken();
+    onLogout();
   };
-
-  //* Demonstration of End-to-End Type-safe ExtendScript Interaction
-  const jsxTestTS = () => {
-    evalTS("helloStr", "test").then((res) => {
-      console.log(res);
-    });
-    evalTS("helloNum", 1000).then((res) => {
-      console.log(typeof res, res);
-    });
-    evalTS("helloArrayStr", ["ddddd", "aaaaaa", "zzzzzzz"]).then((res) => {
-      console.log(typeof res, res);
-    });
-    evalTS("helloObj", { height: 90, width: 100 }).then((res) => {
-      console.log(typeof res, res);
-      console.log(res.x);
-      console.log(res.y);
-    });
-    evalTS("helloVoid").then(() => {
-      console.log("function returning void complete");
-    });
-    evalTS("helloError", "test").catch((e) => {
-      console.log("there was an error", e);
-    });
-  };
-
-  const nodeTest = () => {
-    alert(
-      `Node.js ${process.version}\nPlatform: ${
-        os.platform
-      }\nFolder: ${path.basename(window.cep_node.global.__dirname)}`
-    );
-  };
-
-  useEffect(() => {
-    if (window.cep) {
-    //   subscribeBackgroundColor(setBgColor);
-    //   subscribeActiveDocument(setDocumentSelection);
-    }
-  }, []);
 
   const uploadSVG = async () => {
     setIsUploading(true);
@@ -109,7 +60,7 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
   function renderContent() {
     if (isLoading) return <Loading />;
 
-    if (isError) return <ErrorCard message="There was an error loading the projects." onRetry={refetch} />;
+    if (isError || isErrorProjects) return <ErrorCard message="There was an error loading the projects." onRetry={refetch} />;
 
     if (data?.data?.logos && data.data.logos.length === 0) {
         return <div className={styles.noLogos}>No logos found.</div>;
@@ -126,15 +77,16 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
     }
 
     return null;
-    
   }
+
+  console.log("Projects: ", projects);
 
   return (
     <div className={styles.container}>
         <div className={styles.header}>
             <BrandBowlLogo width={150} />
 
-            <button className={styles.logoutButton} onClick={jsxTest} title="Logout">
+            <button className={styles.logoutButton} onClick={handleLogout} title="Logout">
                 <LogOutIcon /> Logout
             </button>
         </div>
@@ -166,11 +118,6 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
 
         <h2 className={styles.logosHeading}>Assets</h2>
         {renderContent()}
-        {/* <div className={styles.logosContainer}>
-            {data?.data?.logos && data.data.logos.length > 0 && data.data.logos.map((logo) => (
-                <ProjectCard key={logo.uuid} {...logo} />
-            ))}
-        </div> */}
   </div>
   );
 };

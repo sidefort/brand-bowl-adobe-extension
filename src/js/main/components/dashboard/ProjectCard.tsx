@@ -1,13 +1,5 @@
-import { useEffect, useState } from "react";
-import {
-  csi,
-  evalES,
-  evalFile,
-  openLinkInBrowser,
-  subscribeBackgroundColor,
-  evalTS,
-  subscribeActiveDocument,
-} from "../../../lib/utils/bolt";
+import { useState } from "react";
+import { evalTS } from "../../../lib/utils/bolt";
 import styles from "./ProjectCard.module.scss";
 import { DownloadIcon, Loader2Icon } from "lucide-react";
 import { Logo } from "../../../types/logos";

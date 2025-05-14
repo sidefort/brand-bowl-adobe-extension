@@ -25,10 +25,10 @@ const Main = () => {
   const handleLogut = async () => {
     const token = getToken();
     if (!token) return;
+    await revokeTokenOnAPI(token);
     
     deleteToken();
     setScreen(Screens.Login);
-    await revokeTokenOnAPI(token);
   }
 
   useEffect(() => {
