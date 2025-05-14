@@ -14,9 +14,9 @@ const config: CEP_Config = {
   requiredRuntimeVersion: 9.0,
   hosts: [
     { name: "ILST", version: "[0.0,99.9]" },
-    { name: "PHXS", version: "[0.0,99.9]" },
-    { name: "PHSP", version: "[0.0,99.9]" },
-    { name: "IDSN", version: "[0.0,99.9]" },
+    // { name: "PHXS", version: "[0.0,99.9]" },
+    // { name: "PHSP", version: "[0.0,99.9]" },
+    // { name: "IDSN", version: "[0.0,99.9]" },
   ],
 
   type: "Panel",
