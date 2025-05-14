@@ -46,7 +46,6 @@
 
         .projectsLabel {
             display: flex;
-            // color: variables.$highlight;
             font-size: 0.70rem;
             font-weight: 600;
         }
@@ -59,8 +58,6 @@
         }
         .projectsDropdown {
             width: 100%;
-            background-color: var(--select-background-color);
-            // color: #fff;
             font-size: 0.70rem;
             padding: 4px;
             font-weight: 600;
@@ -71,16 +68,10 @@
             gap: 4px;
             align-items: center;
             border-radius: 0;
-            background-color: variables.$darker;
-            color: variables.$font;
             padding: 8px;
             transition: all 0.1s ease-in-out;
             font-weight: 600;
             font-size: 0.65rem;
-
-            &:hover {
-                background-color: variables.$dark;
-            }
 
             svg {
                 width: 14px;
@@ -100,15 +91,10 @@
             gap: 4px;
             align-items: center;
             border-radius: 0;
-            color: variables.$font;
             padding: 8px 16px;
             transition: all 0.1s ease-in-out;
             font-weight: 600;
             font-size: 0.65rem;
-
-            &:hover {
-                background-color: variables.$dark;
-            }
 
             svg {
                 width: 12px;

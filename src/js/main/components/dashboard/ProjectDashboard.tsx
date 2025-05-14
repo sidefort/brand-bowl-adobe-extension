@@ -26,7 +26,7 @@ interface ProjectDashboardProps {
 export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
 //   const [documentSelection, setDocumentSelection] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const [selectedProject, setSelectedProject] = useState<string | undefined>(undefined);
+  const [selectedProject, setSelectedProject] = useState<string | undefined>("");
   const { data, refetch, isLoading, isError } = useLogos(selectedProject);
   const { data: projects, isLoading: isLoadingProjects } = useProjects();
 
@@ -143,9 +143,15 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
           <div className={styles.projectsDropdownContainer}>
             <select id="projects" className={styles.projectsDropdown} disabled={isLoadingProjects} value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)}>
                 {isLoadingProjects && <option disabled>Loading...</option>}
-                {projects?.data && projects.data.length > 0 && projects.data.map((project) => (
-                    <option key={project.id} value={project.id}>{project.name}</option>
-                ))}
+                {projects?.data && projects.data.length > 0 && (
+                  <>
+                    <option value="" disabled>Select a project</option>
+                    {projects.data.map((project) => (
+                        <option key={project.id} value={project.id}>{project.name}</option>
+                    ))}
+                  </>
+                
+                )}
             </select>
             <button id="btnAdd" className={styles.addProjectButton}><PlusIcon /></button>
           </div>

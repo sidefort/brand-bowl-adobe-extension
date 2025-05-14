@@ -9,15 +9,17 @@ import { getToken } from "../utils/token/get-token";
 import { deleteToken } from "../utils/token/delete-token";
 import { revokeTokenOnAPI } from "../services/auth";
 import clsx from "clsx";
+import LoadingScreen from "./components/loading/LoadingScreen";
 
 enum Screens {
+  Loading = "loading",
   Login = "login",
   Dashboard = "dashboard",
 }
 
 const Main = () => {
   const [bgColor, setBgColor] = useState("#282c34");
-  const [screen, setScreen] = useState<Screens>(Screens.Login);
+  const [screen, setScreen] = useState<Screens>(Screens.Loading);
   const [themeClass, setThemeClass] = useState<string>(styles.dark);
 
   const handleLogut = async () => {
@@ -38,7 +40,7 @@ const Main = () => {
   }, []);
 
   useEffect(() => {
-    // Check for token every 5 seconds
+    // Check for token every 2 seconds
     const interval = setInterval(() => {
       const token = getToken();
       if (token) {
@@ -46,7 +48,7 @@ const Main = () => {
       } else {
         setScreen(Screens.Login);
       }
-    }, 5000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);
@@ -71,6 +73,7 @@ const Main = () => {
   return (
     <div className={clsx(styles.app, themeClass)} style={{ backgroundColor: bgColor }}>
       <div className={styles.container}>
+        {screen === Screens.Loading && <LoadingScreen />}
         {screen === Screens.Login && <LoginScreen onAuthenticate={() => setScreen(Screens.Dashboard)} />}
         {screen === Screens.Dashboard && <ProjectDashboard onLogout={handleLogut} />}
       </div>
