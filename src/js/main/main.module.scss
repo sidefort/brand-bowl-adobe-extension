@@ -2,9 +2,140 @@
 
 .app {
     overflow-y: hidden;
+    color: var(--textColor);
 
     .container {
         overflow-y: scroll;
-        
+    }
+}
+
+.dark {
+    color: variables.$font;
+
+    button {
+        background-color: variables.$darkest !important;
+        color: variables.$lightOnDark !important;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$dark !important;
+        }
+
+        &:focus {
+            background-color: variables.$darker !important;
+        }
+
+        svg {
+            color: inherit !important;
+        }
+    }
+
+    select {
+        background-color: variables.$darkest !important;
+        color: variables.$lightOnDark !important;
+        border-color: variables.$dark !important;
+        transition: all 0.1s ease-in-out;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+  
+.mediumDark {
+    color: variables.$font;
+
+    button {
+        background-color: variables.$dark !important;
+        color: variables.$lightOnMediumLight !important;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$darker !important;
+        }
+
+        &:focus {
+            background-color: variables.$darkest !important;
+        }
+
+        svg {
+            color: inherit !important;
+        }
+    }
+
+    select {
+        background-color: variables.$dark !important;
+        color: variables.$lightOnMediumLight !important;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+}
+  
+.mediumLight {
+    color: variables.$darkest !important;
+
+    button {
+        background-color: variables.$highlight !important;
+        color: variables.$darkest !important;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$lightOnDark !important;
+        }
+
+        &:focus {
+            background-color: variables.$dark !important;
+            color: variables.$font !important;
+        }
+           
+
+        svg {
+            color: inherit !important;
+        }
+    }
+
+    select {
+        background-color: variables.$lightOnMediumLight !important;
+        color: variables.$darkest !important;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+}
+
+.light {
+    color: variables.$darker !important;
+
+    button {
+        background-color: variables.$white !important;
+        color: variables.$darkest !important;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$lightOnMediumLight !important;
+        }
+
+        &:focus {
+            background-color: variables.$highlight !important;
+        }
+
+        svg {
+            color: inherit !important;
+        }
+    }
+
+    select {
+        background-color: variables.$white !important;
+        color: variables.$darkest !important;
+        border-color: variables.$dark !important;
+
+        &:focus {
+            outline: none;
+        }
     }
 }

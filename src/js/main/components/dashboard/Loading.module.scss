@@ -6,11 +6,12 @@
     gap: 8px;
     justify-content: center;
     align-items: center;
-    color: variables.$font;
-    font-size: 0.85rem;
+    font-size: 0.70rem;
 
     svg {
         animation: spin 1s linear infinite;
+        width: 14px;
+        height: 14px;
     }
     @keyframes spin {
         0% { transform: rotate(0deg); }
