@@ -11,12 +11,13 @@ import {
 } from "../../../lib/utils/bolt";
 import styles from "./ProjectDashboard.module.scss";
 import { addLogosToAPI } from "../../../services/logos";
-import { CloudUploadIcon, Loader2Icon, LogOutIcon } from "lucide-react";
+import { CloudUploadIcon, Loader2Icon, LogOutIcon, PlusIcon } from "lucide-react";
 import { useLogos } from "../../../hooks/react-query/use-logos";
 import ProjectCard from "./ProjectCard";
 import BrandBowlLogo from "../../../assets/brand-bowl-logo";
 import Loading from "./Loading";
 import ErrorCard from "./ErrorCard";
+import { useProjects } from "../../../hooks/react-query/use-projects";
 
 interface ProjectDashboardProps {
   onLogout: () => void;
@@ -25,8 +26,9 @@ interface ProjectDashboardProps {
 export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
 //   const [documentSelection, setDocumentSelection] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-
-  const { data, refetch, isLoading, isError } = useLogos("680a09489f9819cf3a2f889d");
+  const [selectedProject, setSelectedProject] = useState<string | undefined>(undefined);
+  const { data, refetch, isLoading, isError } = useLogos(selectedProject);
+  const { data: projects, isLoading: isLoadingProjects } = useProjects();
 
   //* Demonstration of Traditional string eval-based ExtendScript Interaction
   const jsxTest = async () => {
@@ -132,16 +134,22 @@ export default function ProjectDashboard({ onLogout }: ProjectDashboardProps) {
         <div className={styles.header}>
             <BrandBowlLogo width={150} />
 
-            {/* <span id="greeting">Hello, user!</span> */}
             <button className={styles.logoutButton} onClick={jsxTest} title="Logout">
                 <LogOutIcon /> Logout
             </button>
         </div>
-        <label >Select Project:</label>
-        <select id="projects" />
-        {/* <button id="btnAdd" onClick={() => openLinkInBrowser("https://www.getbrandbowl.com")}>Add New</button> */}
-        <button id="btnAdd">Add New</button>
-        {/* <p>Document Selection: {String(documentSelection)}</p> */}
+        <div className={styles.projectsContainer}>
+          <label htmlFor="projects" className={styles.projectsLabel}>Select Project:</label>
+          <div className={styles.projectsDropdownContainer}>
+            <select id="projects" className={styles.projectsDropdown} disabled={isLoadingProjects} value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)}>
+                {isLoadingProjects && <option disabled>Loading...</option>}
+                {projects?.data && projects.data.length > 0 && projects.data.map((project) => (
+                    <option key={project.id} value={project.id}>{project.name}</option>
+                ))}
+            </select>
+            <button id="btnAdd" className={styles.addProjectButton}><PlusIcon /></button>
+          </div>
+        </div>
 
 
         <div className={styles.uploadContainer}>

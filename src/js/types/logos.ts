@@ -19,3 +19,14 @@ export interface File {
     width?: number;
     height?: number;
 }
+
+export interface Project {
+    id: string;
+    name: string;
+    createdAt: Date;
+    userId: string;
+    description: string | null;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
+    slug: string;
+}

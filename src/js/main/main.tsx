@@ -8,6 +8,7 @@ import LoginScreen from "./components/login/LoginScreen";
 import { getToken } from "../utils/token/get-token";
 import { deleteToken } from "../utils/token/delete-token";
 import { revokeTokenOnAPI } from "../services/auth";
+import clsx from "clsx";
 
 enum Screens {
   Login = "login",
@@ -17,8 +18,8 @@ enum Screens {
 const Main = () => {
   const [bgColor, setBgColor] = useState("#282c34");
   const [screen, setScreen] = useState<Screens>(Screens.Login);
+  const [themeClass, setThemeClass] = useState<string>(styles.dark);
 
-  //* Demonstration of Traditional string eval-based ExtendScript Interaction
   const handleLogut = async () => {
     const token = getToken();
     if (!token) return;
@@ -52,8 +53,23 @@ const Main = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Map the background color to the corresponding class for theme
+    if (bgColor === "rgb(50, 50, 50)") {
+      setThemeClass(styles.dark);
+    } else if (bgColor === "rgb(83, 83, 83)") {
+      setThemeClass(styles.mediumDark);
+    } else if (bgColor === "rgb(184, 184, 184)") {
+      setThemeClass(styles.mediumLight);
+    } else if (bgColor === "rgb(240, 240, 240)") {
+      setThemeClass(styles.light);
+    } else {
+      setThemeClass(styles.dark); // Default to dark
+    }
+  }, [bgColor]);
+
   return (
-    <div className={styles.app} style={{ backgroundColor: bgColor }}>
+    <div className={clsx(styles.app, themeClass)} style={{ backgroundColor: bgColor }}>
       <div className={styles.container}>
         {screen === Screens.Login && <LoginScreen onAuthenticate={() => setScreen(Screens.Dashboard)} />}
         {screen === Screens.Dashboard && <ProjectDashboard onLogout={handleLogut} />}
