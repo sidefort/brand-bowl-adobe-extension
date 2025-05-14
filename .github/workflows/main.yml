@@ -2,8 +2,12 @@ name: ZXP Release
 
 on:
   push:
-    tags:
-      - "*.*.*"
+    # tags:
+    #   - "*.*.*"
+    branches:
+      - "*"
+      - "*/*"
+      - "**"
 
 permissions:
   contents: write
